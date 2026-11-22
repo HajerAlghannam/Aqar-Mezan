@@ -37,65 +37,81 @@ button.b{width:100%;padding:10px;border:0;border-radius:10px;background:var(--ac
 .c{box-shadow:0 1px 4px rgba(40,60,120,.08)}.w{padding-bottom:76px}.bar{position:fixed;left:0;right:0;bottom:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);z-index:5}.bar button{margin:0;max-width:620px}.two{display:grid;grid-template-columns:2fr 1fr;gap:6px}.two button{margin-top:6px}.tl b{color:var(--acc)}table{width:100%;border-collapse:collapse;font-size:12px;text-align:center}td,th{padding:5px 3px;border-bottom:1px solid var(--line)}
 .vz{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}.vz>svg{width:52%;min-width:170px}.dn{text-align:center}.dn svg{width:120px}.lg{font-size:11px;text-align:right}
 .info{background:var(--bg);border:1px solid var(--line);color:var(--ink);font-weight:500}textarea:focus,select:focus,input:focus{outline:2px solid var(--acc)}
+body{background:var(--bg);background-image:linear-gradient(180deg,rgba(67,97,238,.13),transparent 280px)}
+.hd{padding:16px;box-shadow:0 8px 20px rgba(67,97,238,.3)}.hd h1{font-size:22px}
+.c{border-radius:16px;padding:14px;margin-bottom:12px}h2{font-size:16px;color:var(--acc)}
+label{font-weight:600}
+input[type=number],input[type=text],select,textarea{padding:10px 12px;border-radius:10px;background:var(--card);border:1.5px solid var(--line);font-size:15px}
+textarea{width:100%;box-sizing:border-box;color:var(--ink);font:inherit;margin-bottom:6px}
+input::placeholder,textarea::placeholder{color:#9aa6c0;opacity:1}
+summary{font-size:15px;list-style:none;display:flex;justify-content:space-between}summary::after{content:'▾'}details[open]>summary::after{content:'▴'}
+.ft label{border-radius:20px;background:var(--card)}
+.bar{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:6px}.w{padding-bottom:96px}
+table{min-width:100%}th{background:var(--acc);color:#fff;border-radius:0}td:first-child{text-align:right;font-weight:600;background:var(--bg)}td.bt{background:var(--goodbg);color:var(--good);font-weight:700}
 </style>
 </head>
 <body>
 <div class="w">
-<div class="hd"><h1 style="margin:0;color:#fff">🏠 ميزان العقار</h1><div style="font-size:12px;opacity:.9">قرّر الشراء بالأرقام: مربح أم لا، وكم سنة يرجع المبلغ</div></div>
-<details class="c"><summary>📋 الصق نص الإعلان وأنا أعبّي الحقول</summary><textarea id="pt" rows="4" style="width:100%;box-sizing:border-box;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;padding:6px" placeholder="انسخ وصف الإعلان والصقه هنا"></textarea><button class="b" onclick="parse()">🔍 حلّل الإعلان</button><div id="pq" class="n" style="margin-top:4px"></div><p class="n">لتحليل لقطة شاشة أرسلها لي في المحادثة وأقرأها لك.</p></details>
-<div class="c"><div class="g">
-<div class="f2"><label>الهدف من العقار</label><select id="pu"><option value="0">استثماري (للتأجير)</option><option value="1">سكني</option><option value="2">تجاري</option></select></div>
+<div class="hd"><h1 style="margin:0;color:#fff">🏠 ميزان العقار</h1><div style="font-size:13px;opacity:.92;margin-top:2px">أدخل بيانات العقار ليخبرك: هل هو مربح؟ وكم سنة يرجع المبلغ؟</div></div>
+<details class="c"><summary>📋 الصق نص الإعلان وأنا أعبّي الحقول</summary><textarea id="pt" rows="4" placeholder="انسخ وصف الإعلان والصقه هنا"></textarea><button class="b" onclick="parse()">🔍 حلّل الإعلان</button><div id="pq" class="n" style="margin-top:4px"></div><p class="n">لتحليل لقطة شاشة أرسلها لي في المحادثة وأقرأها لك.</p></details>
+<div class="c"><h2>١. بيانات العقار الأساسية</h2><div class="g">
+<div class="f2"><label>رقم الإعلان</label><input type="text" id="nm" placeholder="اكتب رقم الإعلان"></div>
+<div class="f2"><label>الهدف من العقار</label><select id="pu"><option value="0">استثماري</option><option value="1">سكني</option><option value="2">تجاري</option></select></div>
 <div><label>نوع العقار</label><select id="ty"></select></div>
 <div><label>المدينة</label><select id="ci"></select></div>
-<div><label>الحي</label><select id="di"></select></div>
-<div><label id="lp">السعر (ريال)</label><input type="number" inputmode="decimal" id="price" value="800000"></div>
-<div><label id="lu">عدد الوحدات المؤجرة</label><input type="number" inputmode="decimal" id="units" value="1"></div>
-<div><label>طريقة الإيجار</label><select id="rm"><option value="0">سنوي</option><option value="1">شهري</option><option value="2">يومي</option></select></div>
-<div><label id="lr">الإيجار السنوي للوحدة</label><input type="number" inputmode="decimal" id="ri" value="48000"></div>
-<div id="ocb" style="display:none"><label>نسبة الإشغال %</label><input type="number" inputmode="decimal" id="oc" value="55"></div>
-</div><p class="n">عدد الوحدات المؤجرة = كم شقة أو دور أو محل تؤجره من هذا العقار: شقة واحدة = 1، عمارة فيها 5 شقق = 5، فيلا بدورين = 2.</p><input type="hidden" id="rent" value="48000"><input type="hidden" id="fee" value="0"><input type="hidden" id="vac" value="5"><input type="hidden" id="cost" value="10"><input type="hidden" id="alt" value="5"><input type="hidden" id="gr" value="0"></div>
-<details open class="c"><summary>تفاصيل العقار</summary><div class="g g3">
+<div class="f2" id="dib" style="display:none"><label>الحي أو المحافظة</label><select id="di"></select></div>
+<div><label id="lp">السعر (ريال)</label><input type="number" inputmode="decimal" id="price" placeholder="أدخل السعر"></div>
+<div><label id="lu">عدد الوحدات المؤجرة</label><input type="number" inputmode="decimal" id="units" placeholder="كم وحدة؟"></div>
+<div><label>طريقة الإيجار</label><select id="rm"><option value="">اختر طريقة الإيجار</option><option value="0">سنوي</option><option value="1">شهري</option><option value="2">يومي</option></select></div>
+<div><label id="lr">الإيجار السنوي للوحدة</label><input type="number" inputmode="decimal" id="ri" placeholder="أدخل الإيجار"></div>
+<div id="ocb" style="display:none"><label>نسبة الإشغال %</label><input type="number" inputmode="decimal" id="oc" placeholder="تلقائي"></div>
+</div><p class="n">عدد الوحدات المؤجرة = كم شقة أو دور أو محل تؤجره من العقار (شقة واحدة، عمارة بعدة شقق، فيلا بدورين).</p><input type="hidden" id="rent" value="0"><input type="hidden" id="fee" value="0"><input type="hidden" id="vac" value="0"><input type="hidden" id="cost" value="0"><input type="hidden" id="alt" value="0"><input type="hidden" id="gr" value="0"></div>
+<details open class="c"><summary>٢. تفاصيل العقار ومزاياه وعيوبه</summary><div class="g g3">
 <div><label>المساحة م²</label><select id="ar"></select></div>
 <div id="fcb" style="display:none"><label>عدد الأدوار</label><select id="fc"></select></div>
 <div><label>غرف النوم</label><select id="br"></select></div>
 <div><label>دورات المياه</label><select id="ba"></select></div>
 <div><label>الصالات</label><select id="hl"></select></div>
-<div><label>عمر العقار (سنة)</label><select id="ag"></select></div>
+<div><label>عمر العقار</label><select id="ag"></select></div>
 <div><label>الواجهة</label><select id="fa"></select></div>
 <div><label>عرض الشارع م</label><select id="sw"></select></div>
 <div><label>رقم الدور</label><select id="fl"><option>غير محدد</option><option>أرضي</option><option>أول</option><option>ثاني</option><option>ثالث</option><option>روف</option></select></div>
-<div><label>الملكية</label><select id="ow"></select></div>
-<div class="f2"><label>رقم الإعلان</label><input type="text" id="nm" placeholder="رقم الإعلان"></div>
-</div></details>
-<div class="c"><div id="out"></div><div class="two"><button class="b" onclick="add()">➕ أضف للمقارنة</button><button class="b" style="background:var(--bg);color:var(--ink);border:1px solid var(--line)" onclick="fresh()">🆕 عقار جديد</button></div><div id="tst" class="bd good" style="display:none"></div></div>
-<details class="c"><summary>القرض والراتب</summary>
+<div class="f2"><label>الملكية</label><select id="ow"></select></div>
+</div>
+<div class="gt" style="font-size:14px">✅ المزايا</div><div id="ft"></div>
+<div class="gt" style="font-size:14px;color:var(--bad)">⚠️ العيوب</div><div class="ft" id="df"></div></details>
+<div class="c"><h2>٣. النتيجة</h2><div id="out"></div></div>
+<details class="c"><summary>٤. القرض والراتب</summary>
 <label class="ck"><input type="checkbox" id="useLoan" checked> احسب مع قرض</label>
 <div class="g g3" id="loanIn">
-<div><label>الدفعة الأولى %</label><input type="number" inputmode="decimal" id="dn" value="35"></div>
-<div><label>نسبة التمويل %</label><input type="number" inputmode="decimal" id="rate" value="5.5"></div>
-<div><label>المدة (سنة)</label><input type="number" inputmode="decimal" id="yrs" value="25"></div>
-<div><label>راتبك الصافي</label><input type="number" inputmode="decimal" id="sal" value="16116"></div>
-<div><label>التزامات أخرى</label><input type="number" inputmode="decimal" id="oth" value="0"></div>
-<div><label>حد الاستقطاع %</label><input type="number" inputmode="decimal" id="lim" value="33.3"></div>
+<div><label>الدفعة الأولى %</label><input type="number" inputmode="decimal" id="dn" placeholder="تلقائي"></div>
+<div><label>نسبة التمويل %</label><input type="number" inputmode="decimal" id="rate" placeholder="تلقائي"></div>
+<div><label>مدة القرض (سنة)</label><input type="number" inputmode="decimal" id="yrs" placeholder="تلقائي"></div>
+<div><label>راتبك الصافي</label><input type="number" inputmode="decimal" id="sal" placeholder="أدخل راتبك"></div>
+<div><label>التزامات أخرى</label><input type="number" inputmode="decimal" id="oth" placeholder="اختياري"></div>
+<div><label>حد الاستقطاع %</label><input type="number" inputmode="decimal" id="lim" placeholder="تلقائي"></div>
 </div></details>
-<details class="c"><summary>رسوم اتحاد الملاك والصيانة</summary><label>رسوم اتحاد الملاك سنوياً (ريال)</label><input type="number" inputmode="decimal" id="as" value="0"><p class="n">ترتفع الرسوم مع المصاعد والمرافق (نادي، حراسة، حديقة)، فاسأل عنها قبل الشراء. الصيانة السنوية تُحسب تلقائياً بحد أدنى 3,000 ريال.</p></details>
-<details class="c"><summary>📄 التراخيص والوثائق</summary><div class="ft" id="lkb"></div></details>
-<details class="c"><summary>🔧 عيوب العقار</summary><div class="ft" id="df"></div><p class="n">اختر العيوب الموجودة فقط. هذه أكثر العيوب تأثيراً على قيمة العقار وإيجاره حسب تقديري.</p></details>
-<details class="c"><summary>📍 المشاريع القريبة من الحي</summary><div id="pj"></div></details>
-<details class="c"><summary>المميزات</summary><div id="ft"></div></details>
-<details class="c"><summary>ضريبة التصرفات العقارية</summary><p class="n">5% من قيمة العقار، وتقع على البائع نظاماً ما لم يُتفق كتابياً على أن يتحملها المشتري. المسكن الأول للمواطن: تتحمل الدولة الضريبة حتى مليون ريال.</p><select id="tx"><option value="0">على البائع، لا تحسب عليّ</option><option value="1">يتحملها المشتري (5%)</option><option value="2">مسكن أول لمواطن (حتى مليون)</option></select></details>
-<details class="c"><summary>رسوم السعي</summary><p class="n">2.5% من قيمة الصفقة، يتحملها من تعاقد مع الوسيط. إذا كان الوسيط مسجلاً بالقيمة المضافة تُضاف 15% على مبلغ السعي.</p><label class="ck"><input type="checkbox" id="bk"> السعي عليّ أنا</label><label class="ck"><input type="checkbox" id="bv"> الوسيط مسجل بالقيمة المضافة</label></details>
-<details class="c"><summary>دعم سكني</summary><p class="n">مبلغ الدعم يخفض الكاش المطلوب، وهو غالباً للسكن الشخصي لا للاستثمار.</p><input type="number" inputmode="decimal" id="ska" value="0" placeholder="مبلغ الدعم (ريال)"></details>
+<details class="c"><summary>٥. الرسوم بعد الشراء</summary>
+<label>ضريبة التصرفات العقارية</label><select id="tx"><option value="0">على البائع نظاماً (لا تحسب عليّ)</option><option value="1">يتحملها المشتري (5%)</option><option value="2">مسكن أول لمواطن (الدولة تتحمل حتى مليون)</option></select>
+<label class="ck" style="margin-top:8px"><input type="checkbox" id="bk"> رسوم السعي عليّ (2.5%)</label>
+<label class="ck"><input type="checkbox" id="bv"> الوسيط مسجل بالقيمة المضافة (+15% على السعي)</label>
+<p class="n">الضريبة 5% تقع على البائع ما لم يُتفق كتابياً على غير ذلك. السعي 2.5% يدفعه من تعاقد مع الوسيط.</p></details>
+<div class="c" id="asd" style="display:none"><h2>رسوم اتحاد الملاك</h2><input type="number" inputmode="decimal" id="as" placeholder="الرسوم السنوية (ريال)"><p class="n">ترتفع مع المصاعد والمرافق (نادي، حراسة، حديقة). اسأل عنها قبل الشراء. الصيانة تُحسب تلقائياً.</p></div>
+<details class="c"><summary>٦. الدعم السكني</summary><label>هل يتوفر دعم سكني؟</label><select id="sk"><option value="0">لا</option><option value="1">نعم</option></select>
+<div id="skb" style="display:none"><label style="margin-top:8px">مسار الدعم (لا يمكن الجمع بينهما)</label><select id="skp"><option value="0">باقة الدعم المالي الفوري (دفعة غير مستردة)</option><option value="1">القرض العقاري المدعوم (دعم الأرباح شهرياً)</option></select><div id="skr" class="bd info" style="font-weight:500"></div><p class="n">الدفعة المقطوعة 150,000 لمن دخله أقل من 10,000 و100,000 لمن دخله 10,000 فأكثر. القرض المدعوم لتمويل حتى 500,000 ولمدة 20 سنة: دعم 100% من الأرباح لمن دخله 14,000 فأقل، ومن 35% إلى 95% لمن دخله أعلى. المبلغ تقديري، وتأكد من صندوق التنمية العقارية.</p></div></details>
+<details class="c"><summary>٧. التراخيص والوثائق</summary><div class="ft" id="lkb"></div></details>
+<details class="c"><summary>٨. المشاريع القريبة من الحي</summary><div id="pj"></div></details>
 <div class="c"><h2>🗺️ خريطة الأحياء (مخطط تقريبي)</h2><div id="mp"></div><div class="n" id="mpi"></div></div>
-<div class="c" id="cmpCard"><h2>📊 لوحة قرار المقارنة</h2><div id="cmp"></div><button class="b" style="background:var(--bad);color:#fff" onclick="cmp=[];save();rc()">مسح المقارنة</button></div>
+<div class="c" id="cmpCard"><h2>📊 مقارنة العقارات</h2><div id="cmp"></div><button class="b" style="background:var(--bad);color:#fff" onclick="cmp=[];save();rc()">مسح المقارنة</button></div>
 <div class="c"><h2>📌 خلاصة الحساب: ربح أم خسارة؟</h2><div id="fin"></div></div>
-<div class="c" id="xlBox" style="display:none"><button class="b" style="margin:0" onclick="xl()">📥 تحميل برنامج Excel (الحاسبة + المقارنة)</button><div class="n" style="margin-top:6px">ملف إكسل بمعادلات حية للعقار الحالي، وورقة ثانية بكل عقارات المقارنة.</div></div>
+<div class="c" id="xlBox"><button class="b" style="margin:0" onclick="xl()">📥 تحميل ملف Excel</button><div class="n" style="margin-top:6px">ورقة بمعادلات للعقار الحالي، وورقة ثانية بكل العقارات التي أضفتها للمقارنة.</div></div>
 <p class="n">الأرقام تقديرية. تأكد من عرض البنك والرسوم الفعلية. ليست نصيحة مالية أو عقارية.</p>
 </div>
-<div id="bar" class="bar" style="display:none"><button class="b" onclick="go()">📊 فتح لوحة المقارنة (<span id="cn">0</span>)</button></div>
+<div id="bar" class="bar"><div id="tst" class="bd good" style="display:none;grid-column:1/-1;margin:0"></div><button class="b" onclick="add()">➕ أضف للمقارنة</button><button class="b" style="background:var(--bg);color:var(--ink);border:1px solid var(--line)" onclick="fresh()">🆕 عقار جديد</button><button class="b" onclick="go()">📊 المقارنة (<span id="cn">0</span>)</button></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-const $=id=>document.getElementById(id),v=id=>parseFloat($(id).value)||0;
+const $=id=>document.getElementById(id),v=id=>parseFloat($(id).value)||0,vd=(id,d)=>$(id).value===''?d:v(id);
 const f=n=>isFinite(n)?Math.round(n).toLocaleString('en-US'):'—',p=n=>isFinite(n)?(n*100).toFixed(1)+'%':'—',yr=n=>isFinite(n)&&n>0?n.toFixed(1)+' سنة':'لا يرجع',cl=(x,a,b)=>Math.min(b,Math.max(a,x));
 const TY=[['شقة',1],['عمارة',5],['فيلا',2],['دور / طابق',1],['دوبلكس',2],['تاون هاوس',1],['بنتهاوس',1],['ملحق روف',1],['تريبلكس',3],['استوديو / لوفت',1],['استراحة',1],['محل',1],['مزرعة',1],['أرض',1]];
 const RY=['النخيل','عرقة','طويق','الخير','الجنادرية','السليمانية','أم الحمام','العقيق','السويدي','الرفيعة','عريجاء','الشميسي','العمارية','القدية','الجبيلة','الملز','الشفا','بدر','الربوة','الملقا','الياسمين','النرجس','العارض','حطين','الرمال','النظيم','القيروان','الصحافة','المونسية','الفيصلية - الدرعية','العليا','المروج','الغدير','الواحة','الربيع','سدرة','الشرفية','الورود','الروضة','الندى','القادسية','الصفاء','البيان','اليرموك','لبن','المهدية','السحاب','نمار','المنصورة','النسيم','الزهرة','المصيف','الرابية','العلا','قرطبة','النخبة','المرسلات','الهدا','البطحاء','الديرة','الملك فهد','الملك عبدالله','الملك سلمان','الإزدهار','المناخ','جرير','الرائد','الوزارات','السلام','الفلاح','الوادي','الريان','الحمراء','الخليج','المغرزات','العزيزية','المعيزلية','منفوحة','الدار البيضاء','الحزم','اشبيلية','غرناطة','الجزيرة'];
@@ -109,7 +125,7 @@ const FAC=[['غير محدد',0],['شرقية',3],['شمالية شرقية',3],
 const G=[['مميزات العقار / الوحدة',['مدخل سيارة','موقف خاص','مصعد','مدخلان','بلكونة / تراس','غرفة ماستر','غرفة خادمة','غرفة سائق','غرفة غسيل','مطبخ مجهز','نوافذ واسعة وإضاءة','جلسات خارجية','تشطيب راقٍ','مكيفات مخفية','دخول ذكي','كهرباء وماء وصرف متوفرة','عزل حراري ومائي','ألياف ضوئية']],['مميزات المشروع',['منزل ذكي','حديقة ومسطحات خضراء','نادي رياضي','سينما','لاونج ضيافة','حضانة أطفال','غرفة اجتماعات','حارس وكاميرات','وقوف سفلي']],['الموقع والوصول',['قريب من المدارس','قريب من الأماكن العامة والمراكز التجارية','قريب من الخدمات الحكومية','قريب من مسجد','قريب من جامعة','قريب من المترو','قريب من محطة باص','قريب من الطرق الرئيسية','الحي خدمي','مدخل عقار مستقل وواضح','على شارعين','سهل الوصول']],['الضمان والصيانة',['ضمان كهرباء','ضمان سباكة','صيانة مجانية سنة','اتحاد ملاك سنة']],['خدمات ما بعد البيع',['إعادة التأجير','إعادة البيع','تنظيف مجاني سنة']]];
 const LK=['رخصة البناء','شهادة الإشغال (إتمام البناء)','صك الملكية','مخطط البناء المعتمد','محضر الفرز','فاتورة الكهرباء (عداد مستقل)','فاتورة المياه','شهادة الصرف الصحي','شهادة العزل الحراري','شهادة الدفاع المدني (السلامة)','شهادة المطابقة لكود البناء السعودي','تقرير فحص إنشائي','وثيقة اتحاد الملاك','عقود الإيجار في إيجار'];
 const op=a=>a.map((x,i)=>`<option value="${i}">${x}</option>`).join(''),nn=['—',1,2,3,4,5,6,7,8];
-$('ty').innerHTML=op(TY.map(x=>x[0]));$('ci').innerHTML=op(Object.keys(CT));$('fa').innerHTML=op(FAC.map(x=>x[0]));
+$('ty').innerHTML=op(TY.map(x=>x[0]));$('ci').innerHTML='<option value="">اختر المدينة</option>'+Object.keys(CT).map((x,i)=>`<option value="${i}">${x}</option>`).join('');$('fa').innerHTML=op(FAC.map(x=>x[0]));
 ['br','hl','ba'].forEach(i=>$(i).innerHTML=op(nn));
 const nsel=(id,a,u)=>{$(id).innerHTML='<option value="">غير محدد</option>'+a.map(x=>`<option value="${Array.isArray(x)?x[1]:x}">${Array.isArray(x)?x[0]:x+u}</option>`).join('')};
 nsel('ar',[50,75,100,125,150,175,200,225,250,275,300,350,400,450,500,600,700,800,1000],' م²');nsel('ag',[['جديد',0],['أقل من سنتين',1],['2–5 سنوات',3.5],['5–10 سنوات',7.5],['10–15 سنة',12.5],['15–20 سنة',17.5],['أكثر من 20 سنة',25]],'');nsel('sw',[8,10,12,15,18,20,25,30,40,60],' م');
@@ -119,20 +135,25 @@ $('ft').innerHTML=G.map(g=>`<div class="gt">${g[0]}</div><div class="ft">${g[1].
 $('pj').innerHTML=PL.map(x=>`<label class="ck"><input type="checkbox" class="pk" data-n="${x[0]}" data-w="${x[2]}"> ${x[0]} <span class="n">(${x[1]})</span></label>`).join('')+'<p class="n">يُحدد المشروع تلقائياً للأحياء المعروفة عندي، وتقدر تضيف غيره. المشروع المتأخر يعطي نقطة أقل. الحالة حسب معلوماتي، تأكد منها.</p>';
 $('lkb').innerHTML=LK.map(x=>`<label><input type="checkbox" class="lk"> ${x}</label>`).join('');
 $('df').innerHTML=DF.map(x=>`<label><input type="checkbox" class="dk"> ${x}</label>`).join('');
-function dis(){const c=Object.keys(CT)[$('ci').value],a=CT[c],g=GV[c]||[];$('di').innerHTML='<option value="0">اختر الحي</option>'+(a.length?'<optgroup label="أحياء المدينة">'+a.map((x,i)=>`<option value="${i+1}">${x}</option>`).join('')+'</optgroup>':'')+(g.length?'<optgroup label="محافظات ومراكز تتبع المنطقة">'+g.map((x,i)=>`<option value="${a.length+1+i}">${x}</option>`).join('')+'</optgroup>':'')+`<option value="${a.length+g.length+1}">حي آخر</option>`}$('ci').onchange=()=>{dis();pset()};const pset=()=>document.querySelectorAll('.pk').forEach(e=>e.checked=(PJ[dName()]||[]).includes(e.dataset.n));$('di').addEventListener('change',pset);dis();
-$('ty').onchange=()=>{const t=TY[$('ty').value],k=t[0],bl=k=='عمارة',vl=k.startsWith('فيلا');$('units').value=t[1];if(k=='أرض'||k=='مزرعة')$('ri').value=0;$('fcb').style.display=bl||vl?'':'none';$('fc').value=bl?3:2;$('lu').textContent=bl?'عدد الشقق':vl?'عدد الأدوار المؤجرة':'عدد الوحدات المؤجرة';if(k=='محل')$('pu').value=2;calc()};$('fc').innerHTML=[1,2,3,4,5,6,7,8].map(n=>`<option>${n}</option>`).join('');$('fc').onchange=()=>{if(TY[$('ty').value][0].startsWith('فيلا'))$('units').value=$('fc').value;calc()};
-const dName=()=>$('di').options[$('di').selectedIndex].text,cName=()=>Object.keys(CT)[$('ci').value];
+function dis(){const k=$('ci').value,c=k===''?'':Object.keys(CT)[k],a=CT[c]||[],g=GV[c]||[];$('dib').style.display=c?'':'none';$('di').innerHTML='<option value="0">اختر الحي</option>'+(a.length?'<optgroup label="أحياء المدينة">'+a.map((x,i)=>`<option value="${i+1}">${x}</option>`).join('')+'</optgroup>':'')+(g.length?'<optgroup label="محافظات ومراكز تتبع المنطقة">'+g.map((x,i)=>`<option value="${a.length+1+i}">${x}</option>`).join('')+'</optgroup>':'')+`<option value="${a.length+g.length+1}">حي آخر</option>`}$('ci').onchange=()=>{dis();pset()};const pset=()=>document.querySelectorAll('.pk').forEach(e=>e.checked=(PJ[dName()]||[]).includes(e.dataset.n));$('di').addEventListener('change',pset);dis();
+$('ty').onchange=()=>{const t=TY[$('ty').value],k=t[0],bl=k=='عمارة',vl=k.startsWith('فيلا');$('units').value='';if(k=='أرض'||k=='مزرعة')$('ri').value=0;$('fcb').style.display=bl||vl?'':'none';$('fc').value=bl?3:2;$('lu').textContent=bl?'عدد الشقق':vl?'عدد الأدوار المؤجرة':'عدد الوحدات المؤجرة';if(k=='محل')$('pu').value=2;calc()};$('fc').innerHTML=[1,2,3,4,5,6,7,8].map(n=>`<option>${n}</option>`).join('');$('fc').onchange=()=>{if(TY[$('ty').value][0].startsWith('فيلا'))$('units').value=$('fc').value;calc()};
+const dName=()=>$('di').options[$('di').selectedIndex].text,cName=()=>$('ci').value===''?'':Object.keys(CT)[$('ci').value];
 const DEM=()=>{const m=DM[cName()],d=dName();return m&&d in m?m[d]:-1};
+function skCalc(loan,rt,yrs){const o={a:0,m:0,t:''};if($('sk').value!='1')return o;const sal=v('sal');
+if(!(sal>0)){o.t='أدخل راتبك الصافي في قسم القرض والراتب لأحسب الدعم.';return o}
+if($('skp').value=='0'){o.a=sal<10000?150000:100000;o.t=`الدفعة المقطوعة التقديرية: ${f(o.a)} ريال تخفض الدفعة الأولى (${sal<10000?'دخلك أقل من 10,000':'دخلك 10,000 فأكثر'}).`;return o}
+const F=Math.min(loan,5e5),T=Math.min(yrs,20),n=T*12,r=rt/12,pm=r==0?F/n:F*r/(1-Math.pow(1+r,-n)),it=pm*n-F,lo=sal<=14000?1:.35,hi=sal<=14000?1:.95;
+o.m=lo*it/n;o.t=`دعم الأرباح التقديري: ${f(lo*it/n)}${sal<=14000?'':' إلى '+f(hi*it/n)} ريال شهرياً في حسابك، وإجمالي ${f(lo*it)}${sal<=14000?'':' إلى '+f(hi*it)} ريال خلال ${T} سنة. محسوب على الحد الأدنى للنسبة.`;return o}
 function R(){
-const price=v('price'),u=Math.max(1,v('units')),rm=+$('rm').value,rent=rm==0?v('ri'):rm==1?v('ri')*12:v('ri')*365*v('oc')/100;$('rent').value=rent;
+const price=v('price'),u=Math.max(1,v('units')),rm=+$('rm').value,rent=rm==0?v('ri'):rm==1?v('ri')*12:v('ri')*365*vd('oc',55)/100;$('rent').value=rent;
 const tn=TY[$('ty').value][0],land=tn=='أرض'||tn=='مزرعة',ag0=$('ag').value===''?0:v('ag'),vac=rm==2?0:tn=='استراحة'?.2:tn=='محل'?.1:u>1?.06:.05,cost=land?.02:cl(.08+ag0*.004,.08,.18),alt=.05,g=0,tx=+$('tx').value;$('vac').value=vac*100;$('cost').value=cost*100;$('alt').value=alt*100;
 const feeAmt=(tx==1?price*.05:tx==2?Math.max(0,price-1e6)*.05:0)+($('bk').checked?price*.025*($('bv').checked?1.15:1):0),feeP=price>0?feeAmt/price*100:0;$('fee').value=feeP;
-const total=price+feeAmt,gross=rent*u,maint=land?gross*cost:Math.max(3000,gross*cost),assoc=v('as'),opx=maint+assoc,net=gross*(1-vac)-opx,ny=total>0?net/total:0,pb=net>0?total/net:Infinity,ey=ny+g;
+const total=price+feeAmt,gross=rent*u,maint=land?gross*cost:Math.max(3000,gross*cost),assoc=['شقة','عمارة','دور / طابق'].includes(tn)?v('as'):0,opx=maint+assoc,net=gross*(1-vac)-opx,ny=total>0?net/total:0,pb=net>0?total/net:Infinity,ey=ny+g;
 $('cost').value=gross>0?opx/gross*100:0;
-const L=$('useLoan').checked,dn=v('dn')/100,rt=v('rate')/100,yrs=Math.max(1,v('yrs')),sup=v('ska');
-const down=price*dn,loan=price-down,cash=Math.max(0,down+feeAmt-sup),n=yrs*12,r=rt/12;
-const pm=r==0?loan/n:loan*r/(1-Math.pow(1+r,-n)),ann=pm*12,cf=net-ann,payb=cf>0?cash/cf:Infinity,roc=cash>0?cf/cash:0;
-const sal=v('sal'),ratio=sal>0?(pm+v('oth'))/sal:0,lim=v('lim')/100;
+const L=$('useLoan').checked,dn=vd('dn',35)/100,rt=vd('rate',5.5)/100,yrs=Math.max(1,vd('yrs',25));
+const down=price*dn,loan=price-down,SK=skCalc(loan,rt,yrs),sup=SK.a,cash=Math.max(0,down+feeAmt-sup),n=yrs*12,r=rt/12;
+const pm=r==0?loan/n:loan*r/(1-Math.pow(1+r,-n)),ann=pm*12,cf=net-ann+SK.m*12,payb=cf>0?cash/cf:Infinity,roc=cash>0?cf/cash:0;
+const sal=v('sal'),ratio=sal>0?(pm+v('oth'))/sal:0,lim=vd('lim',33.3)/100;
 const nf=document.querySelectorAll('.fk:checked').length,pk=[...document.querySelectorAll('.pk:checked')],pr=pk.map(e=>e.dataset.n),pw=pk.reduce((t,e)=>t+(+e.dataset.w),0),dm=DEM(),a=v('ar')/u,agv=$('ag').value===''?null:v('ag'),df=document.querySelectorAll('.dk:checked').length,pen=Math.min(14,df*2.5);
 const pu=+$('pu').value,n1=cl(ey/(alt*(pu==2?2:1.5)),0,1),n2=cl((25-pb)/13,0,1),n3=L?(cf>=0?1:cl(1+cf/ann,0,1)):.53,
 n4=(({2:7,1:4,0:0,'-1':3})[dm]+cl(pw,0,4)+FAC[$('fa').value][1]+(pu==2?cl(v('sw')/30,0,2):0))/(pu==2?16:14),
@@ -143,11 +164,13 @@ const parts=NM.map((t,i)=>[t,N[i]*W[i],W[i]]).filter(q=>q[2]>0);
 const pq=sal>0?price/(sal*12):0,pp=sal>0?cl((5-pq)*1.5,-8,4):0,sm=({'استوديو / لوفت':40,'شقة':80})[tn]||120,ap=a>0?(a<sm?-cl((sm-a)/sm*4,0,4):cl(a/(sm*2),0,3)):0;
 const lp=cl(document.querySelectorAll('.lk:checked').length,0,8);
 const dv=[...parts.filter(q=>!(q[0]=='القرض'&&!L)).map(q=>[q[0],(q[1]/q[2]-.5)*q[2]]),['السعر مقابل راتبك',pp],['المساحة',ap],['العيوب',-pen],...(lp?[['التراخيص',lp]]:[])];
-return{price,u,total,gross,net,ny,pb,ey,L,cash,loan,pm,ann,cf,payb,roc,ratio,lim,sup,feeP,alt,dm,pr,parts,sc:cl(parts.reduce((t,x)=>t+x[1],0)-pen+pp+ap+lp,0,100),pen,df,pu,vac,cost,opx,assoc,maint,dv,pp,ap,pq,lp,nv:[n1,n2,n3,n4,n5,n7],dn:dName(),ar:v('ar'),agv}}
+return{price,u,total,gross,net,ny,pb,ey,L,cash,loan,pm,ann,cf,payb,roc,ratio,lim,sup,feeP,alt,dm,pr,parts,sc:cl(parts.reduce((t,x)=>t+x[1],0)-pen+pp+ap+lp,0,100),SK,pen,df,pu,vac,cost,opx,assoc,maint,dv,pp,ap,pq,lp,nv:[n1,n2,n3,n4,n5,n7],dn:dName(),ar:v('ar'),agv}}
 const row=(a,b)=>`<div class="r"><span>${a}</span><b>${b}</b></div>`,bd=(c,m)=>`<div class="bd ${c}">${m}</div>`;
 function calc(){
-const rm=$('rm').value;$('ocb').style.display=rm==2?'':'none';$('lr').textContent=['الإيجار السنوي للوحدة','الإيجار الشهري للوحدة','سعر الليلة للوحدة'][rm];
-const x=R(),L=x.L;$('loanIn').style.display=L?'':'none';
+const rm=$('rm').value;$('ocb').style.display=rm==2?'':'none';$('lr').textContent=['الإيجار السنوي للوحدة','الإيجار الشهري للوحدة','سعر الليلة للوحدة'][rm||0];
+$('asd').style.display=['شقة','عمارة','دور / طابق'].includes(TY[$('ty').value][0])?'':'none';$('skb').style.display=$('sk').value=='1'?'':'none';$('loanIn').style.display=$('useLoan').checked?'':'none';
+if(!v('price')){$('out').innerHTML='<p class="n" style="text-align:center;padding:14px">أدخل السعر والإيجار لتظهر النتيجة</p>';$('fin').innerHTML='';mapRender();return}
+const x=R(),L=x.L;$('skr').textContent=x.SK.t+($('sk').value=='1'&&$('pu').value!='1'?' ملاحظة: الدعم السكني للسكن الشخصي لا للاستثمار.':'');$('loanIn').style.display=L?'':'none';
 const vc=x.sc>=70?'good':x.sc>=45?'warn':'bad',vt=x.sc>=70?['✅ مربح ومجدي للشراء','✅ مناسب للسكن','✅ مجدي تجارياً'][x.pu]:x.sc>=45?'⚠️ مقبول بحذر':['❌ غير مربح','❌ غير مناسب للسكن','❌ غير مجدٍ تجارياً'][x.pu];
 const dl=['ضعيف','متوسط','مرتفع'][x.dm]||'لم أقيّمه بعد';
 let h=`<div class="gw"><svg viewBox="0 0 120 68"><path d="M10 60A50 50 0 0 1 110 60" fill="none" stroke="var(--line)" stroke-width="10" stroke-linecap="round"/><path d="M10 60A50 50 0 0 1 110 60" fill="none" stroke="var(--${vc})" stroke-width="10" stroke-linecap="round" stroke-dasharray="${x.sc*1.57} 157"/><text x="60" y="54" text-anchor="middle" font-size="26" font-weight="700" fill="currentColor">${Math.round(x.sc)}</text></svg></div>`+bd(vc+' big',vt+' (من 100)');
@@ -172,11 +195,11 @@ const stk=x=>{const sg=[{l:'القسط',v:x.L?x.ann:0,c:'#f59e0b'},{l:'الصي�
 const viz=x=>dvc(x)+cbar(x);
 function heat(s){const t=s.slice(0,4);return '<div class="gt">خريطة ألوان المقارنة (من 100)</div><div style="overflow-x:auto"><table><tr><th></th>'+t.map(c=>`<th>${c.n}</th>`).join('')+'</tr>'+AXN.map((a,i)=>`<tr><td>${a}</td>`+t.map(c=>{const q=(c.nv||[])[i]||0;return `<td style="background:${q>=.66?'var(--good)':q>=.33?'var(--warn)':'var(--bad)'};color:#fff;font-weight:700">${Math.round(q*100)}</td>`}).join('')+'</tr>').join('')+'</table></div><div class="n">أخضر قوي، أصفر متوسط، أحمر ضعيف.</div>'}
 const cbar=x=>{if(!cmp.length)return'';const a=[{n:'الحالي',s:x.sc},...cmp.map((c,i)=>({n:'عقار '+(c.no||i+1),s:c.sc}))];return '<div class="gt">الدرجة مقابل العقارات المضافة</div>'+a.map((c,i)=>`<div class="br"><span>${c.n}</span><i><u style="width:${c.s}%;${i==0?'background:#f59e0b':''}"></u></i><em>${Math.round(c.s)}</em></div>`).join('')};
-function fin(x){const Y=Math.max(1,v('yrs')),L=x.L,paid=L?x.cash:x.total,flow=L?x.cf:x.net,yy=L?x.payb:x.pb;
+function fin(x){const Y=Math.max(1,vd('yrs',25)),L=x.L,paid=L?x.cash:x.total,flow=L?x.cf:x.net,yy=L?x.payb:x.pb;
 const vc=flow<0?'bad':(yy>25||x.ey<x.alt)?'warn':'good',vt=flow<0?'❌ خسارة: العقار يكلفك أكثر مما يدخل':yy>25?'⚠️ ربح ضعيف: رأس المال يرجع بعد أكثر من 25 سنة':x.ey<x.alt?'⚠️ ربح أقل من البديل الآمن':'✅ ربح';
 let h=bd(vc+' big',vt);
 h+=row('تدفع الآن (رأس المال)',f(paid))+(L?row('إجمالي ما تدفعه حتى نهاية القرض',f(x.cash+x.ann*Y))+row('الفوائد',f(x.ann*Y-x.loan)):'')+row(L?'الربح السنوي بعد القسط':'الربح السنوي (الإيجار الصافي)',f(flow))+row('الأرباح خلال 10 سنوات',f(flow*10))+row('كم سنة يرجع رأس المال',yr(yy));
-const gy=x.price>0?x.gross/x.price:0,c12=(L?x.ann:0)+x.opx,rn=x.gross*(1-x.vac),mx=Math.max(0,(rn-x.opx)/12),rr=v('rate')/1200,nn=Y*12,ml=rr==0?mx*nn:mx*(1-Math.pow(1+rr,-nn))/rr;
+const gy=x.price>0?x.gross/x.price:0,c12=(L?x.ann:0)+x.opx,rn=x.gross*(1-x.vac),mx=Math.max(0,(rn-x.opx)/12),rr=vd('rate',5.5)/1200,nn=Y*12,ml=rr==0?mx*nn:mx*(1-Math.pow(1+rr,-nn))/rr;
 h+=`<div class="gt">حساب التكلفة السنوية الشاملة</div><div class="bd info">= (${L?f(x.pm):0} × 12) + ${f(x.assoc)} (اتحاد الملاك) + ${f(x.maint)} (صيانة)<br><b>= ${f(c12)} ريال سنوياً</b></div>`+row('الإيجار السنوي بعد الفراغ',f(rn))+row(rn-c12>=0?'الفائض بعد كل التكاليف':'العجز السنوي',f(Math.abs(rn-c12)))+row('العائد الإجمالي (الإيجار ÷ السعر)',p(gy))+bd(gy>=.07?'good':'warn',gy>=.07?'ضمن العائد المستهدف (7–8%) أو أعلى':'أقل من العائد المستهدف (7–8%)')+row('أقصى قسط يغطيه الإيجار (شهرياً)',f(mx))+row('أقصى تمويل مناسب',f(ml));
 if(L)h+=row('القسط من راتبك',p(x.ratio))+(x.cf<0?row('تدفع من راتبك شهرياً',f(-x.cf/12))+row('إجمالي ما تدفعه من راتبك خلال القرض',f(-x.cf*Y)):'');
 h+='<p class="n">بدون احتساب ارتفاع السعر أو بيع العقار.</p>';return h}
@@ -197,7 +220,7 @@ if(x.ar>0&&PM[x.dn]){const pp=x.price/x.ar;if(pp>PM[x.dn]*1.15)a.push(`سعر ا
 if(x.pu==0&&x.ey<x.alt)a.push('المرابحة أو الصكوك بعائد حوالي 5% أضمن لك من هذا العقار، إلا لو توقعت ارتفاع السعر');
 const KD=['رخصة البناء','شهادة الإشغال (إتمام البناء)','صك الملكية'],miss=KD.filter(k=>![...document.querySelectorAll('.lk:checked')].some(e=>e.parentElement.textContent.trim()==k));
 if(miss.length&&!['أرض','مزرعة'].includes(TY[$('ty').value][0]))a.push('اطلب قبل الشراء: '+miss.join('، '));
-if(x.pu==0){const gy=x.price>0?x.gross/x.price:0;if(x.gross>0&&gy<.07)a.push(`العائد الإجمالي ${p(gy)} أقل من المستهدف (7–8%): فاوض على السعر أو ابحث عن إيجار أعلى`);if($('rm').value!='0')a.push('فضّل التأجير السنوي: متاعب وتكاليف تنظيف وتبدّل مستأجرين أقل من اليومي والشهري')}
+if(x.pu==0){const gy=x.price>0?x.gross/x.price:0;if(x.gross>0&&gy<.07)a.push(`العائد الإجمالي ${p(gy)} أقل من المستهدف (7–8%): فاوض على السعر أو ابحث عن إيجار أعلى`);if(['1','2'].includes($('rm').value))a.push('فضّل التأجير السنوي: متاعب وتكاليف تنظيف وتبدّل مستأجرين أقل من اليومي والشهري')}
 if([...document.querySelectorAll('.fk:checked')].some(e=>/مصعد|نادي|حديقة|حارس|سينما/.test(e.parentElement.textContent))&&!x.assoc)a.push('المصاعد والمرافق ترفع رسوم اتحاد الملاك: اسأل عنها وأدخلها في التكلفة السنوية');
 if(x.L){const mx=Math.max(0,(x.gross*(1-x.vac)-x.opx)/12);if(x.pm>mx*1.05)a.push(`اختر قسطاً حوالي ${f(mx)} شهرياً أو أقل ليغطيه الإيجار، ولا تنجرف وراء أعلى مبلغ يعرضه البنك`)}
 return a}
@@ -228,27 +251,27 @@ document.querySelectorAll('.fk,.dk').forEach(e=>{const l=e.parentElement.textCon
 document.querySelectorAll('.lk').forEach(e=>{const l=e.parentElement.textContent.trim(),no=/بدون (?:رخصة|ترخيص)|لا يوجد (?:رخصة|ترخيص)/.test(t);if((l=='رخصة البناء'&&!no&&/رخصة بناء|ترخيص بناء|رخصة البناء/.test(t))||(l=='شهادة الإشغال (إتمام البناء)'&&/إتمام|اتمام|إشغال|اشغال/.test(t))||(l=='صك الملكية'&&/صك/.test(t)&&!/تحديث الصك|الصك\S*\s*جاري|جاري تحديث/.test(t))||(l=='محضر الفرز'&&/فرز|مفرز/.test(t)))e.checked=true});
 if(/بدون (?:رخصة|ترخيص)|لا يوجد (?:رخصة|ترخيص)/.test(t)){document.querySelectorAll('.dk').forEach(e=>{if(e.parentElement.textContent.trim()=='بناء بدون رخصة أو شهادة إشغال')e.checked=true});o.push('تنبيه: بدون رخصة')}
 $('pq').textContent=o.length?'قرأت: '+o.join('، ')+'. راجع الحقول وصحّح أي رقم.':'ما قدرت أقرأ بيانات من النص، جرّب نسخ الوصف كاملاً.';calc()}
-function add(){const x=R(),d=$('di').selectedIndex>0?dName():'';cmp.push({n:$('nm').value,t:TY[$('ty').value][0],d:d||cName(),pr:x.price,ny:x.ny,pb:x.pb,cf:x.L?x.cf/12:null,cash:x.L?x.cash:x.total,sc:Math.round(x.sc),al:x.alt,no:cmp.reduce((m,c)=>Math.max(m,c.no||0),0)+1,nv:x.nv,pu:x.pu,dn:x.dn});save();rc();$('tst').textContent='✅ أضفت عقار '+cmp[cmp.length-1].no+' للمقارنة. عدّل الأرقام لعقار آخر وأضفه.';$('tst').style.display='';setTimeout(()=>$('tst').style.display='none',4000)}
+function toast(m){$('tst').textContent=m;$('tst').style.display='';setTimeout(()=>$('tst').style.display='none',3500)}
+function add(){const x=R();if(!x.price){toast('أدخل السعر أولاً');return}
+const d=$('di').selectedIndex>0?dName():'';cmp.push({n:$('nm').value,t:TY[$('ty').value][0],d:d||cName()||'—',pr:x.price,gr:x.gross,ny:x.ny,pb:x.pb,cf:x.L?x.cf/12:null,cash:x.L?x.cash:x.total,sc:Math.round(x.sc),al:x.alt,no:cmp.reduce((m,c)=>Math.max(m,c.no||0),0)+1,nv:x.nv,pu:x.pu,dn:x.dn});save();rc();toast('✅ أضفت عقار '+cmp[cmp.length-1].no+'. اضغط "عقار جديد" لإضافة غيره.')}
 function go(){$('cmpCard').scrollIntoView({behavior:'smooth'})}
-function fresh(){['nm','ar','ag','sw','pt'].forEach(i=>$(i).value='');['br','ba','hl','fa','fl','ow'].forEach(i=>$(i).selectedIndex=0);document.querySelectorAll('.fk,.dk,.pk,.lk').forEach(e=>e.checked=false);calc();window.scrollTo({top:0,behavior:'smooth'})}
-function ch(s,t,k,fm,low){const a=s.filter(c=>c[k]!=null&&isFinite(c[k]));if(!a.length)return'';const mx=Math.max(...a.map(c=>Math.abs(c[k])))||1,bv=low?Math.min(...a.map(c=>c[k])):Math.max(...a.map(c=>c[k]));return `<div class="gt">${t}</div>`+a.map(c=>`<div class="br"><span style="width:84px">${c.n}</span><i><u style="width:${Math.abs(c[k])/mx*100}%;${c[k]==bv?'background:var(--good)':c[k]<0?'background:var(--bad)':''}"></u></i><em style="width:76px">${fm(c[k])}</em></div>`).join('')}
-function rc(){$('bar').style.display=cmp.length?'':'none';$('cn').textContent=cmp.length;mapRender();if(!cmp.length){$('cmp').innerHTML='<p class="n">أضف عقارين أو أكثر لتظهر اللوحة.</p>';return}
-const s=cmp.map((c,i)=>({...c,i,ad:c.n,n:'عقار '+(c.no||i+1)})).sort((a,b)=>b.sc-a.sc),b=s[0],m=s.length>1;
-const top=(k,low)=>{const a=s.filter(c=>c[k]!=null&&isFinite(c[k]));return a.length?a.reduce((q,c)=>(low?c[k]<q[k]:c[k]>q[k])?c:q):null};
-const hy=top('ny'),fp=top('pb',1),lc=top('cash',1),vcl=c=>c.sc>=70?'good':c.sc>=45?'warn':'bad',vem=c=>c.sc>=70?'✅':c.sc>=45?'⚠️':'❌';
-const why=[];if(m){if(hy&&hy.i==b.i)why.push('الأعلى عائداً');if(fp&&fp.i==b.i)why.push('الأسرع استرداداً');if(lc&&lc.i==b.i)why.push('الأقل كاشاً');}
-let h=bd(vcl(b),(m?'⭐ الأنسب: ':'')+`${b.n} · ${b.d} · درجة ${b.sc}/100`+(why.length?'<br><span style="font-size:12px">'+why.join(' · ')+'</span>':''))+(m&&b.sc<45?bd('bad','لا أنصح بأي منها: كلها أقل من 45 درجة'):'');
-h+=h2h(s,b)+`<div class="tl"><div><small>أعلى عائد</small><b>${hy?hy.n+' · '+p(hy.ny):'—'}</b></div><div><small>أسرع استرداد</small><b>${fp?fp.n+' · '+yr(fp.pb):'—'}</b></div><div><small>أقل كاش مطلوب</small><b>${lc?lc.n+' · '+f(lc.cash):'—'}</b></div><div><small>عدد العقارات</small><b>${s.length}</b></div></div>`;
-h+=heat(s)+ch(s,'الدرجة من 100','sc',x=>x)+ch(s,'العائد السنوي','ny',p)+ch(s,'سنوات الاسترداد (الأقل أفضل)','pb',x=>x.toFixed(1),1)+ch(s,'المتبقي بعد القسط شهرياً','cf',f)+ch(s,'الكاش المطلوب (الأقل أفضل)','cash',f,1);
-h+='<div class="gt">جدول القرار</div><div style="overflow-x:auto"><table><tr><th></th><th>الإعلان</th><th>الحي</th><th>السعر</th><th>العائد</th><th>الاسترداد</th><th>الدرجة</th><th></th></tr>'+s.map(c=>`<tr><td>${vem(c)}</td><td>${c.n}${c.ad?' ('+c.ad+')':''}</td><td>${c.d}</td><td>${f(c.pr)}</td><td>${p(c.ny)}</td><td>${yr(c.pb)}</td><td>${c.sc}</td><td><a href="#" onclick="cmp.splice(${c.i},1);save();rc();return false">✖</a></td></tr>`).join('')+'</table></div>';
+function fresh(){['nm','price','units','ri','oc','as','pt'].forEach(i=>$(i).value='');['ar','ag','sw','br','ba','hl','fa','fl','ow','rm','tx'].forEach(i=>$(i).selectedIndex=0);$('ty').value=0;$('ty').onchange();$('units').value='';$('pu').value=0;$('ci').value='';dis();$('bk').checked=false;$('bv').checked=false;$('sk').value=0;document.querySelectorAll('.fk,.dk,.pk,.lk').forEach(e=>e.checked=false);$('pq').textContent='';calc();window.scrollTo({top:0,behavior:'smooth'})}
+function ch(s,t,k,fm,low){const a=s.filter(c=>c[k]!=null&&isFinite(c[k]));if(!a.length)return'';const mx=Math.max(...a.map(c=>Math.abs(c[k])))||1,bv=low?Math.min(...a.map(c=>c[k])):Math.max(...a.map(c=>c[k]));return `<div class="gt">${t}</div>`+a.map(c=>`<div class="br"><span style="width:70px">${c.n}</span><i><u style="width:${Math.abs(c[k])/mx*100}%;${c[k]==bv?'background:var(--good)':c[k]<0?'background:var(--bad)':''}"></u></i><em style="width:80px">${fm(c[k])}</em></div>`).join('')}
+function rc(){$('cn').textContent=cmp.length;mapRender();if(!cmp.length){$('cmp').innerHTML='<p class="n">أضف عقارين أو أكثر لتظهر المقارنة، مثل ورقة الإكسل: عقار 1 وعقار 2 وعقار 3.</p>';return}
+const s=cmp.map((c,i)=>({...c,i,ad:c.n,n:'عقار '+(c.no||i+1)})),o=[...s].sort((a,b)=>b.sc-a.sc),b=o[0],m=s.length>1,vc=c=>c.sc>=70?'good':c.sc>=45?'warn':'bad',vt=c=>c.sc>=70?'✅ مناسب':c.sc>=45?'⚠️ مقبول بحذر':'❌ غير مناسب';
+const bs=(k,low)=>{const a=s.filter(c=>c[k]!=null&&isFinite(c[k])&&(!low||c[k]>0));return a.length?a.reduce((q,c)=>(low?c[k]<q[k]:c[k]>q[k])?c:q).i:-1};
+const RW=[['رقم الإعلان',c=>c.ad||'—'],['النوع',c=>c.t],['المدينة / الحي',c=>c.d],['السعر',c=>f(c.pr)],['الإيجار السنوي',c=>f(c.gr),'gr'],['العائد السنوي',c=>p(c.ny),'ny'],['كم سنة يرجع المبلغ',c=>yr(c.pb),'pb',1],['المتبقي شهرياً بعد القسط',c=>c.cf==null?'—':f(c.cf),'cf'],['المبلغ المدفوع الآن',c=>f(c.cash),'cash',1],['الدرجة من 100',c=>c.sc,'sc'],['القرار',c=>vt(c)]];
+let h=bd(vc(b),(m?'⭐ الأنسب: ':'')+`${b.n} · ${b.d} · درجة ${b.sc} من 100`)+(m&&b.sc<45?bd('bad','لا أنصح بأي منها: كلها أقل من 45 درجة'):'')+h2h(o.map(c=>s[c.i]),s[b.i]);
+h+='<div style="overflow-x:auto;margin-top:8px"><table><tr><th></th>'+s.map(c=>`<th>${c.n}${m&&c.i==b.i?' ⭐':''}<br><a href="#" style="color:#fff" onclick="cmp.splice(${c.i},1);save();rc();return false">✖</a></th>`).join('')+'</tr>'+RW.map(r=>{const w=r[2]?bs(r[2],r[3]):-1;return `<tr><td>${r[0]}</td>`+s.map(c=>`<td class="${m&&c.i==w?'bt':''}">${r[1](c)}</td>`).join('')+'</tr>'}).join('')+'</table></div><div class="n">الخلية الخضراء = الأفضل في هذا البند.</div>';
+h+=ch(s,'الدرجة (الأعلى أفضل)','sc',x=>x)+ch(s,'العائد السنوي (الأعلى أفضل)','ny',p)+ch(s,'كم سنة يرجع المبلغ (الأقل أفضل)','pb',x=>x.toFixed(1),1)+ch(s,'المتبقي شهرياً بعد القسط','cf',f);
 $('cmp').innerHTML=h}
 let dl=null;
 if(window.claude&&claude.use){claude.use('downloads').then(d=>{if(d){dl=d;$('xlBox').style.display=''}}).catch(()=>{})}
 async function xl(){
-if(!dl||!window.XLSX)return;
+if(!window.XLSX)return;
 const ws={};
 [['A1','حاسبة العقار والقرض'],['A3','المدخلات'],['A15','بدون قرض'],['A25','مع قرض'],['A38','تقديرات، لا تشمل ارتفاع سعر العقار. ليست نصيحة مالية.']].forEach(([a,x])=>ws[a]={t:'s',v:x});
-const I=[['سعر العقار الكلي (ريال)',v('price'),'#,##0'],['عدد الوحدات',Math.max(1,v('units')),'0'],['إيجار الوحدة السنوي (ريال)',v('rent'),'#,##0'],['نسبة الفراغ',v('vac')/100,'0.0%'],['صيانة وإدارة',v('cost')/100,'0.0%'],['رسوم الشراء',v('fee')/100,'0.0%'],['العائد البديل الآمن',v('alt')/100,'0.0%'],['الدفعة الأولى (% من السعر)',v('dn')/100,'0.0%'],['نسبة التمويل السنوية',v('rate')/100,'0.0%'],['مدة القرض (سنوات)',Math.max(1,v('yrs')),'0']];
+const I=[['سعر العقار الكلي (ريال)',v('price'),'#,##0'],['عدد الوحدات',Math.max(1,v('units')),'0'],['إيجار الوحدة السنوي (ريال)',v('rent'),'#,##0'],['نسبة الفراغ',v('vac')/100,'0.0%'],['صيانة وإدارة',v('cost')/100,'0.0%'],['رسوم الشراء',v('fee')/100,'0.0%'],['العائد البديل الآمن',v('alt')/100,'0.0%'],['الدفعة الأولى (% من السعر)',vd('dn',35)/100,'0.0%'],['نسبة التمويل السنوية',vd('rate',5.5)/100,'0.0%'],['مدة القرض (سنوات)',Math.max(1,vd('yrs',25)),'0']];
 I.forEach((x,i)=>{ws['A'+(4+i)]={t:'s',v:x[0]};ws['B'+(4+i)]={t:'n',v:x[1],z:x[2]}});
 const R=[[16,'التكلفة الكلية (سعر + رسوم)','B4*(1+B9)','#,##0'],[17,'سعر الوحدة الواحدة','B4/B5','#,##0'],[18,'الإيجار الإجمالي سنوياً','B5*B6','#,##0'],[19,'الإيجار الصافي (بعد الفراغ والصيانة)','B18*(1-B7-B8)','#,##0'],[20,'العائد الصافي','B19/B16','0.0%'],[21,'سنوات استرجاع رأس المال','IF(B19>0,B16/B19,"لا يرجع")','0.0'],[22,'الربح السنوي مقابل البديل','B19-B10*B16','#,##0'],[23,'الحكم','IF(B20>=B10,IF(B21<=15,"مربح: يغلب البديل ويرجع بسرعة","يغلب البديل لكن الاسترجاع طويل"),"عائده أقل من البديل الآمن")',null,1],[26,'الدفعة الأولى','B4*B11','#,##0'],[27,'مبلغ القرض','B4-B26','#,##0'],[28,'الكاش المطلوب (دفعة + رسوم)','B26+B4*B9','#,##0'],[29,'القسط الشهري','IF(B12=0,B27/(B13*12),PMT(B12/12,B13*12,-B27))','#,##0'],[30,'القسط السنوي','B29*12','#,##0'],[31,'التدفق السنوي بعد القسط','B19-B30','#,##0'],[32,'التدفق الشهري','B31/12','#,##0'],[33,'سنوات استرجاع الكاش','IF(B31>0,B28/B31,"لا يرجع")','0.0'],[34,'عائد الكاش المستثمر','B31/B28','0.0%'],[35,'إجمالي الفوائد على المدة','B29*B13*12-B27','#,##0'],[36,'الحكم','IF(B31<0,"خسارة نقدية: تدفع من جيبك",IF(B34>=B10,"مربح: يغلب البديل","الإيجار يغطي القسط لكن عائد الكاش أقل من البديل"))',null,1]];
 R.forEach(([r,l,f,z,s])=>{ws['A'+r]={t:'s',v:l};ws['B'+r]=s?{t:'s',f}:{t:'n',f,z}});
@@ -256,7 +279,7 @@ ws['!ref']='A1:B38';ws['!cols']=[{wch:42},{wch:34}];
 const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'الحاسبة');
 const hd=['العقار','رقم الإعلان','النوع','الحي','السعر','العائد %','سنوات الاسترداد','المتبقي شهرياً بعد القسط','الكاش المطلوب','الدرجة'],w2=XLSX.utils.aoa_to_sheet([hd,...cmp.map((c,i)=>['عقار '+(c.no||i+1),c.n||'',c.t,c.d,c.pr,Math.round(c.ny*1000)/10,isFinite(c.pb)?Math.round(c.pb*10)/10:'لا يرجع',c.cf==null?'':Math.round(c.cf),Math.round(c.cash),c.sc])]);w2['!cols']=hd.map(()=>({wch:16}));XLSX.utils.book_append_sheet(wb,w2,'المقارنة');
 wb.Workbook={Views:[{RTL:true}],CalcPr:{fullCalcOnLoad:true}};
-try{await dl.save({filename:'property-calculator.xlsx',data:XLSX.write(wb,{bookType:'xlsx',type:'array'})})}catch(e){if(e&&e.code!=='declined')alert('تعذر تنزيل الملف هنا')}
+const out=XLSX.write(wb,{bookType:'xlsx',type:'array'});try{if(dl)await dl.save({filename:'property-calculator.xlsx',data:out});else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out],{type:'application/octet-stream'}));a.download='property-calculator.xlsx';document.body.appendChild(a);a.click();a.remove()}}catch(e){if(e&&e.code!=='declined')alert('تعذر تنزيل الملف هنا')}
 }
 
 
